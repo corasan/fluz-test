@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
 import SearchContext from '../SearchContext';
 
 class Results extends Component {
@@ -9,16 +9,36 @@ class Results extends Component {
     return <Text>Hello</Text>
   }
 
+  renderItem = ({ item: { previewURL, tags } }) => (
+    <View style={{ margin: 5 }}>
+      <Image source={{ uri: previewURL }} style={styles.image} />
+    </View>
+  )
+
   render() {
-    console.log('context', this.context)
     return (
       <View style={{ flex: 1 }}>
         <SearchContext.Consumer>
-          {value => this.theValue(value)}
+          {({ results }) => (
+            <FlatList
+              data={results.hits}
+              keyExtractor={(item, key) => key.toString()}
+              renderItem={this.renderItem}
+              numColumns={3}
+              contentContainerStyle={{ alignItems: 'center' }}
+            />
+          )}
         </SearchContext.Consumer>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  image: {
+    height: 120,
+    width: 120
+  }
+})
 
 export default Results;
