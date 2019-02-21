@@ -2,7 +2,7 @@
 
 ## Installation
 
-Clone project and run `npm install` in the root of the project.
+Clone project and run `npm install` at the root of the project.
 
 ## Screenshots
 ![alt text][first-screen]
