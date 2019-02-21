@@ -1,5 +1,10 @@
 # fluz-test
 
+## Installation
+
+Clone project and run `npm install` in the root of the project.
+
+## Screenshots
 ![alt text][first-screen]
 ![alt text][second-screen]
 ![alt text][third-screen]
