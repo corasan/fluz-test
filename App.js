@@ -1,30 +1,34 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
+import React, { Component } from 'react';
+import { Platform, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+export default class App extends Component {
+  state = {
+    searchText: ''
+  }
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+  handleSearchChange = (searchText) => {
+    this.setState({ searchText })
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <View style={styles.searchContainer}>
+          <TextInput
+            value={this.state.searchText}
+            onChangeText={this.handleSearchChange}
+            style={styles.input}
+            placeholder="Search image"
+          />
+          <TouchableOpacity style={{ width: 40 }}>
+            <Icon
+              name="search"
+              color="#a8a8a8"
+              size={34}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -33,18 +37,26 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    paddingHorizontal: 20,
+    paddingTop: 100
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  input: {
+    height: 50,
+    borderBottomLeftRadius: 50,
+    borderTopLeftRadius: 50,
+    paddingLeft: 20,
+    fontSize: 18,
+    flex: 1
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  searchContainer: {
+    width: '100%',
+    borderColor: '#d3d3d3',
+    borderRadius: 100,
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingRight: 5
+  }
 });
