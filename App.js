@@ -2,13 +2,34 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
+const API_KEY = '11684144-ab06e23739e68a5c5cb15efea';
+const requestOptions = {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+}
+
 export default class App extends Component {
   state = {
     searchText: ''
   }
 
   handleSearchChange = (searchText) => {
-    this.setState({ searchText })
+    this.setState({ searchText });
+  }
+
+  search = async () => {
+    const query = this.state.searchText;
+    const url = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}&image_type=photo`;
+
+    try {
+      const response = await fetch(url, requestOptions);
+      const results = await response.json();
+    } catch (err) {
+      console.log('[App - search()]', err);
+    }
   }
 
   render() {
@@ -21,7 +42,7 @@ export default class App extends Component {
             style={styles.input}
             placeholder="Search image"
           />
-          <TouchableOpacity style={{ width: 40 }}>
+          <TouchableOpacity style={{ width: 40 }} onPress={this.search}>
             <Icon
               name="search"
               color="#a8a8a8"
