@@ -2,5 +2,7 @@ import { createContext } from 'react';
 
 export default createContext({
   results: [],
-  searchImage: () => {}
+  searchImage: () => {},
+  selectImage: () => {},
+  selectedImage: {}
 })

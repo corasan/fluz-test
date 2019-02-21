@@ -13,7 +13,8 @@ const requestOptions = {
 
 class App extends Component {
   state = {
-    results: []
+    results: [],
+    selectedImage: null
   }
 
   searchImage = async (query, callback) => {
@@ -24,18 +25,26 @@ class App extends Component {
       const results = await response.json();
       this.setState({ results });
       
-      if (callback) {
-        callback();
-      }
+      if (callback) callback();
     } catch (err) {
       console.log('[App - search()]', err);
     }
   }
 
+  selectImage = (selectedImage, callback) => {
+    this.setState({ selectedImage });
+
+    if (callback) callback();
+  }
+
   render() {
+    const { results, selectedImage } = this.state;
+
     const context = {
-      results: this.state.results,
-      searchImage: this.searchImage
+      results,
+      selectedImage,
+      searchImage: this.searchImage,
+      selectImage: this.selectImage,
     };
 
     return (

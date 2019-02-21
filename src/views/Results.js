@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
+import { View, FlatList, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import SearchContext from '../SearchContext';
 
 class Results extends Component {
-  theValue = (context) => {
-    console.log('context', context)
-
-    return <Text>Hello</Text>
+  renderItem = ({ item }, selectImage) => {
+    const { navigate } = this.props.navigation;
+    return (
+      <TouchableOpacity
+        style={{ margin: 5 }}
+        onPress={() => selectImage(item, () => navigate('ImageDetails'))}
+      >
+        <Image source={{ uri: item.previewURL }} style={styles.image} />
+      </TouchableOpacity>
+    )
   }
-
-  renderItem = ({ item: { previewURL, tags } }) => (
-    <View style={{ margin: 5 }}>
-      <Image source={{ uri: previewURL }} style={styles.image} />
-    </View>
-  )
 
   render() {
     return (
       <View style={{ flex: 1 }}>
         <SearchContext.Consumer>
-          {({ results }) => (
+          {({ results, selectImage }) => (
             <FlatList
               data={results.hits}
               keyExtractor={(item, key) => key.toString()}
-              renderItem={this.renderItem}
+              renderItem={item => this.renderItem(item, selectImage)}
               numColumns={3}
               contentContainerStyle={{ alignItems: 'center' }}
             />
